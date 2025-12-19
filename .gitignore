@@ -103,3 +103,8 @@ InitTestScene*.unity*
 /*.onnx
 /*.xml
 /*.pdb
+# 忽略根目錄下，上述檔案產生的 meta 檔
+/*.dll.meta
+/*.onnx.meta
+/*.xml.meta
+/*.pdb.meta
