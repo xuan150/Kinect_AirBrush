@@ -97,3 +97,9 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# 忽略根目錄下的特定的二進位檔案，但不影響 Assets 資料夾內的
+/*.dll
+/*.onnx
+/*.xml
+/*.pdb
