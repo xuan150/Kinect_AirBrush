@@ -55,6 +55,7 @@ public class PuppetAvatar : MonoBehaviour
             case JointId.SpineChest: return HumanBodyBones.Chest;
             case JointId.Neck: return HumanBodyBones.Neck;
             case JointId.Head: return HumanBodyBones.Head;
+
             case JointId.HipLeft: return HumanBodyBones.LeftUpperLeg;
             case JointId.KneeLeft: return HumanBodyBones.LeftLowerLeg;
             case JointId.AnkleLeft: return HumanBodyBones.LeftFoot;
@@ -63,14 +64,21 @@ public class PuppetAvatar : MonoBehaviour
             case JointId.KneeRight: return HumanBodyBones.RightLowerLeg;
             case JointId.AnkleRight: return HumanBodyBones.RightFoot;
             case JointId.FootRight: return HumanBodyBones.RightToes;
+
             case JointId.ClavicleLeft: return HumanBodyBones.LeftShoulder;
             case JointId.ShoulderLeft: return HumanBodyBones.LeftUpperArm;
             case JointId.ElbowLeft: return HumanBodyBones.LeftLowerArm;
             case JointId.WristLeft: return HumanBodyBones.LeftHand;
+            case JointId.HandTipLeft: return HumanBodyBones.LeftIndexDistal; //human是unity內建的
+            case JointId.ThumbLeft: return HumanBodyBones.LeftThumbDistal;
+
             case JointId.ClavicleRight: return HumanBodyBones.RightShoulder;
             case JointId.ShoulderRight: return HumanBodyBones.RightUpperArm;
             case JointId.ElbowRight: return HumanBodyBones.RightLowerArm;
             case JointId.WristRight: return HumanBodyBones.RightHand;
+            case JointId.HandTipRight: return HumanBodyBones.RightIndexDistal;
+            case JointId.ThumbRight: return HumanBodyBones.RightThumbDistal;
+
             default: return HumanBodyBones.LastBone;
         }
     }
