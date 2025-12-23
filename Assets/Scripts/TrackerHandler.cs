@@ -10,6 +10,8 @@ public class TrackerHandler : MonoBehaviour
     public bool drawSkeletons = true;
     Quaternion Y_180_FLIP = new Quaternion(0.0f, 1.0f, 0.0f, 0.0f);
 
+    public global::Body currentBody;
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -108,6 +110,7 @@ public class TrackerHandler : MonoBehaviour
 
         // render the closest body
         Body skeleton = trackerFrameData.Bodies[closestBody];
+        currentBody = skeleton;
         renderSkeleton(skeleton, 0);
     }
 
@@ -200,7 +203,7 @@ public class TrackerHandler : MonoBehaviour
             parentJointRotationBodySpace = absoluteJointRotations[(int)parent];
         }
         Quaternion jointRotationBodySpace = absoluteJointRotations[(int)jointId];
-        Quaternion relativeRotation =  Quaternion.Inverse(parentJointRotationBodySpace) * jointRotationBodySpace;
+        Quaternion relativeRotation = Quaternion.Inverse(parentJointRotationBodySpace) * jointRotationBodySpace;
 
         return relativeRotation;
     }

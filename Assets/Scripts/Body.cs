@@ -22,6 +22,9 @@ public struct Body : ISerializable
 
     public uint Id;
 
+    //public int HandLeftState; //用來存手勢狀態的整數 (0=未知, 2=張開, 3=握拳)
+    //public int HandRightState;
+
     public Body(int maxJointsLength)
     {
         JointPositions3D = new System.Numerics.Vector3[maxJointsLength];
@@ -47,20 +50,25 @@ public struct Body : ISerializable
         }
         copiedBody.Id = copyFromBody.Id;
         copiedBody.Length = copyFromBody.Length;
+
+        // copiedBody.HandLeftState = copyFromBody.HandLeftState;
+        // copiedBody.HandRightState = copyFromBody.HandRightState;
+
         return copiedBody;
     }
 
-    public void CopyFromBodyTrackingSdk(Microsoft.Azure.Kinect.BodyTracking.Body body, Calibration sensorCalibration)
+    public void CopyFromBodyTrackingSdk(Microsoft.Azure.Kinect.BodyTracking.Body sdkBody, Calibration sensorCalibration)
     {
-        Id = body.Id;
+        Id = sdkBody.Id;
         Length = Microsoft.Azure.Kinect.BodyTracking.Skeleton.JointCount;
+        
 
         for (int bodyPoint = 0; bodyPoint < Length; bodyPoint++)
         {
             // K4ABT joint position unit is in millimeter. We need to convert to meters before we use the values.
-            JointPositions3D[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).Position / 1000.0f;
-            JointRotations[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).Quaternion;
-            JointPrecisions[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).ConfidenceLevel;
+            JointPositions3D[bodyPoint] = sdkBody.Skeleton.GetJoint(bodyPoint).Position / 1000.0f;
+            JointRotations[bodyPoint] = sdkBody.Skeleton.GetJoint(bodyPoint).Quaternion;
+            JointPrecisions[bodyPoint] = sdkBody.Skeleton.GetJoint(bodyPoint).ConfidenceLevel;
 
             var jointPosition = JointPositions3D[bodyPoint];
             var position2d = sensorCalibration.TransformTo2D(
