@@ -31,7 +31,7 @@ public class AirBrush : MonoBehaviour
     //int lastStateValue = -1;   
     // LineRender drawLine;
     float OPENDIS = 0.05f; //內建距離是公尺
-    public float currentDistance = 0f;
+    public float heightDiff = 0f;
     //bool isDrawing = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -58,34 +58,23 @@ public class AirBrush : MonoBehaviour
     void Update()
     {
         if (KinectDevice == null || KinectDevice.currentBody.Length == 0 || KinectDevice.currentBody.JointPositions3D == null) return;
-       // if (KinectDevice.currentBody.Length == 0) return;
-       // if (KinectDevice.currentBody.JointPositions3D == null) return;
 
-        int thumbIndex, tipIndex;
+        int switchIndex;
+        int spineIndex = (int)JointId.SpineChest; //基準點胸口
         if (!isRightHand)
         {
-            thumbIndex = (int)JointId.ThumbRight;
-            tipIndex = (int)JointId.HandTipRight;
+            switchIndex = (int)JointId.HandRight;
         }
         else
         {
-            thumbIndex = (int)JointId.ThumbLeft;
-            tipIndex = (int)JointId.HandTipLeft;
+            switchIndex = (int)JointId.HandLeft;
         }
 
-        var rawThumbPos = KinectDevice.currentBody.JointPositions3D[thumbIndex];
-        var rawTipPos = KinectDevice.currentBody.JointPositions3D[tipIndex];
+        var rawSwitchPos = KinectDevice.currentBody.JointPositions3D[switchIndex];
+        var rawSpinePos = KinectDevice.currentBody.JointPositions3D[spineIndex];
 
-        // 3. 手動計算距離 (畢氏定理)
-        // Distance = sqrt( (x1-x2)^2 + (y1-y2)^2 + (z1-z2)^2 )
-        float dx = rawTipPos.X - rawThumbPos.X;
-        float dy = rawTipPos.Y - rawThumbPos.Y;
-        float dz = rawTipPos.Z - rawThumbPos.Z;
-
-        currentDistance = Mathf.Sqrt(dx * dx + dy * dy + dz * dz);
-
-        // 4. 判斷是否握拳 (距離小於門檻)
-        if (currentDistance < OPENDIS)
+        heightDiff = rawSpinePos.Y - rawSwitchPos.Y;
+        if (heightDiff > OPENDIS)
         {
             isOpen = true;
         }
