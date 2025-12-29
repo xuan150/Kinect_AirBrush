@@ -51,9 +51,6 @@ public struct Body : ISerializable
         copiedBody.Id = copyFromBody.Id;
         copiedBody.Length = copyFromBody.Length;
 
-        // copiedBody.HandLeftState = copyFromBody.HandLeftState;
-        // copiedBody.HandRightState = copyFromBody.HandRightState;
-
         return copiedBody;
     }
 

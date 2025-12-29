@@ -12,8 +12,6 @@ public class AirControl : MonoBehaviour
 
     [Header("Inspector")]
     bool isOpen;
-    //public Material lineMaterial;
-
     Transform drawPoint;
     float OPENDIS = 0.05f; //內建距離是公尺
     public float heightDiff = 0f;
@@ -22,9 +20,8 @@ public class AirControl : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         //鏡像要是左手
-        drawPoint = (!isRightHand) ? puppetAnimator.GetBoneTransform(HumanBodyBones.RightHand) : puppetAnimator.GetBoneTransform(HumanBodyBones.LeftHand);
+        drawPoint = (!isRightHand) ? puppetAnimator.GetBoneTransform(HumanBodyBones.RightIndexDistal) : puppetAnimator.GetBoneTransform(HumanBodyBones.LeftIndexDistal);
     }
 
     // Update is called once per frame
@@ -34,7 +31,7 @@ public class AirControl : MonoBehaviour
 
         int switchIndex;
         int spineIndex = (int)JointId.SpineChest; //基準點胸口
-        switchIndex = (!isRightHand) ? (int)JointId.HandRight : switchIndex = (int)JointId.HandLeft;
+        switchIndex = (!isRightHand) ? (int)JointId.HandRight : (int)JointId.HandLeft;
 
         var rawSwitchPos = KinectDevice.currentBody.JointPositions3D[switchIndex];
         var rawSpinePos = KinectDevice.currentBody.JointPositions3D[spineIndex];

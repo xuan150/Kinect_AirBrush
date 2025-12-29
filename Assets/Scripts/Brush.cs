@@ -33,7 +33,7 @@ public class Brush : MonoBehaviour
 
         points.Add(nowPosition);
         line.positionCount = points.Count; //要更新現在共有幾個座標數值，才會根據此數字去畫對應的點
-        line.SetPosition(points.Count - 1, nowPosition);
+        line.SetPosition(points.Count - 1, nowPosition); //setposition有加s的話是把所有點都重畫一次，所以放點集合的位置
     }
 
     public void EndDraw()
