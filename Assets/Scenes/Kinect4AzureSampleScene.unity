@@ -447,7 +447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 210279053, guid: 019b917704c3c29478d778e143d411d2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.356
+      value: 1.702
       objectReference: {fileID: 0}
     - target: {fileID: 210279053, guid: 019b917704c3c29478d778e143d411d2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -831,7 +831,7 @@ MonoBehaviour:
   puppetAnimator: {fileID: 1414767435}
   isRightHand: 1
   brushControler: {fileID: 1414767436}
-  heightDiff: 0
+  smoothIndex: 9.9
 --- !u!95 &1414767435 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6917378017658129621, guid: 4f08c0830dd2b7445b04e9deb828ac3e,

@@ -80,58 +80,29 @@ LineRenderer:
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 2.0295303
+    widthMultiplier: 1.0348263
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0115242
-        value: 0.25727844
+        time: 0
+        value: 0.067108154
         inSlope: 1.5255108
         outSlope: 1.5255108
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0.13090837
-      - serializedVersion: 3
-        time: 0.28974915
-        value: 0.82777023
-        inSlope: 1.0620499
-        outSlope: 1.0620499
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.3584451
-      - serializedVersion: 3
-        time: 0.593338
-        value: 0.88739777
-        inSlope: -0.12271192
-        outSlope: -0.12271192
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.2884924
-        outWeight: 0.4269523
-      - serializedVersion: 3
-        time: 0.878492
-        value: 0.17150879
-        inSlope: -0.5545895
-        outSlope: -0.5545895
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.38015237
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.665531, g: 0.86637163, b: 0.89, a: 0}
-      key1: {r: 0.75512874, g: 0.89927256, b: 0.91657937, a: 1}
-      key2: {r: 0.9113326, g: 0.9635025, b: 0.9690766, a: 1}
+      key1: {r: 0.75512874, g: 0.89927256, b: 0.91657937, a: 0.45490196}
+      key2: {r: 0.9113326, g: 0.9635025, b: 0.9690766, a: 0.45490196}
       key3: {r: 0.9333334, g: 0.9725491, b: 0.97647065, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
