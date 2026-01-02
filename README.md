@@ -1,147 +1,80 @@
-# Sample Unity Body Tracking Application
+# Immersive Body-Tracked Air Drawing
 
-### Directions for getting started:
+![Unity](https://img.shields.io/badge/Unity-2019%2B-black)
+![Platform](https://img.shields.io/badge/Platform-Windows-blue)
+![Hardware](https://img.shields.io/badge/Hardware-Azure%20Kinect%20DK-0078D4)
 
-#### 1) First get the latest nuget packages of libraries:
+> 一個結合 Azure Kinect 骨架追蹤技術的互動式 3D 空中繪畫系統。將使用者的指尖作為虛擬畫筆，在聚光燈照耀的黑色空間裡揮灑創造力。
 
-Open the sample_unity_bodytracking project in Unity.
-Open the Visual Studio Solution associated with this project.
-If there is no Visual Studio Solution yet you can make one by opening the Unity Editor
-and selecting one of the csharp files in the project and opening it for editing.
-You may also need to set the preferences->External Tools to Visual Studio
+## 專案簡介 (Introduction)
 
-In Visual Studio:
-Select Tools->NuGet Package Manager-> Package Manager Console
+本專案基於 **Microsoft Azure Kinect Body Tracking SDK** 開發，嘗試創造一種「表演藝術」般的體驗。
 
-On the command line of the console at type the following command:
+場景設計模擬一個被聚光燈聚焦的黑暗舞台，使用者站在中央，透過右手食指直接在 3D 空間中書寫發光的線條。系統會即時追蹤全身骨架，並透過手勢邏輯來控制筆觸的生成。
 
-Update-Package -reinstall
+---
 
-The latest libraries will be put in the Packages folder under sample_unity_bodytracking
+## 操作說明 (Controls)
 
-#### 2) Next add these libraries to the Assets/Plugins folder:
+本專案採用雙手協作的邏輯，模擬畫家拿著畫板與畫筆的姿態：
 
-You can do this by hand or just **run the batch file MoveLibraryFile.bat** in the sample_unity_bodytracking directory
+| 身體部位 | 動作 | 功能說明 |
+| :--- | :--- | :--- |
+| **左手 (Left Hand)** | **舉起 / 放下** | **畫筆開關 (Trigger)**<br>舉起左手即開啟畫筆模式；放下則停止出墨。 |
+| **右手 (Right Hand)** | **移動揮舞** | **繪製筆觸 (Brush)**<br>在左手舉起期間，右手軌跡將轉化為 3D 線條。 |
+| **UI 介面** | **點擊按鈕** | **清空畫布 (Clear Canvas)**<br>移除場景中所有筆畫。 |
 
-From Packages/Microsoft.Azure.Kinect.BodyTracking.1.1.2/lib/netstandard2.0
+---
 
-- Microsoft.Azure.Kinect.BodyTracking.deps.json
-- Microsoft.Azure.Kinect.BodyTracking.xml
-- Microsoft.Azure.Kinect.BodyTracking.dll
-- Microsoft.Azure.Kinect.BodyTracking.pdb
+## 安裝與設定 (Installation & Setup) - 重要！若沒完成會噴錯。
 
-From Packages/Microsoft.Azure.Kinect.BodyTracking.1.1.2/lib/native/amd64/release/
+**在第一次執行專案之前，請務必完成以下步驟，否則骨架追蹤將無法啟動。**
 
-- k4abt.dll
+由於 Azure Kinect SDK 需要依賴原生的 DLL 檔案，Unity 在編輯器模式下執行時，需要這些檔案位於專案根目錄。
 
-From Packages/Microsoft.Azure.Kinect.BodyTracking.ONNXRuntime.1.10.0/lib/native/amd64/release
+### 步驟 1：Clone 專案
+將本專案下載至本地端。
 
-- directml.dll
-- onnxruntime.dll
-- onnxruntime_providers_cuda.dll
-- onnxruntime_providers_shared.dll
-- onnxruntime_providers_tensorrt.dll
+### 步驟 2：複製 Plugins
+打開專案資料夾，進行以下檔案搬移操作：
 
-From Packages/Microsoft.Azure.Kinect.Sensor.1.4.1/lib/netstandard2.0
+1.  進入 `Assets/Plugins` 資料夾。
+2.  **複製** 資料夾內所有的 `.dll` 檔案（包含 Azure Kinect 相關、ONNX Runtime、DirectML 等）。
+3.  回到 **專案根目錄**（即包含 `Assets`, `Library`, `Packages` 的那一層）。
+4.  **貼上** 這些檔案。
 
-- Microsoft.Azure.Kinect.Sensor.deps.json
-- Microsoft.Azure.Kinect.Sensor.xml
-- Microsoft.Azure.Kinect.Sensor.dll
-- Microsoft.Azure.Kinect.Sensor.pdb
+### 步驟 3：硬體連接
+1.  連接 Azure Kinect DK 電源與 USB 3.0 線材。
+2.  確認電腦已安裝 [Azure Kinect Body Tracking SDK](https://docs.microsoft.com/en-us/azure/kinect-dk/body-sdk-setup)。
+3.  開啟 Unity 場景並按下 Play。
 
-From Packages/Microsoft.Azure.Kinect.Sensor.1.4.1/lib/native/amd64/release
+---
 
-- depthengine_2_0.dll
-- k4a.dll
-- k4arecord.dll
+## 技術需求 (Requirements)
 
-From Packages/System.Buffers.4.4.0/lib/netstandard2.0
+* **作業系統**: Windows 10 / 11 (64-bit)
+* **硬體設備**: Azure Kinect DK
+* **顯卡需求**: 建議 NVIDIA GeForce GTX 1050 或更高（用於 CUDA 加速骨架運算）
+* **開發環境**: Unity (建議 2019.4 LTS 或更高版本)
 
-- System.Buffers.dll
+---
 
-From Packages/System.Memory.4.5.3/lib/netstandard2.0
+## 專案結構與來源
 
-- System.Memory.dll
+本專案延伸自官方範例 [Azure-Kinect-Samples](https://github.com/microsoft/Azure-Kinect-Samples)，並進行了以下客製化修改：
 
-From Packages/System.Reflection.Emit.Lightweight.4.6.0/lib/netstandard2.0
+* **Scripts/**:
+    * 新增筆刷控制邏輯 (`Brush.cs`, `AirControl.cs`)。
+    * 新增 UI Button 以一鍵清空畫布，並掛上控制腳本（`Clear.cs`）。
+* **Scenes/**:
+    * 重新設計光影場景。
+* **Rendering**:
+    * 加入 LineRenderer 處理與發光材質設定。
+* **Prefab**:
+    * 將 stroke 設為 Prefab ，讓每次筆觸都生成一個新物件。
 
-- System.Reflection.Emit.Lightweight.dll
+---
 
-From Packages/System.Runtime.CompilerServices.Unsafe.4.5.2/lib/netstandard2.0
+## License
 
-- System.Runtime.CompilerServices.Unsafe.dll
-
-
-#### 3) Then add these libraries to the sample_unity_bodytracking project root directory that contains the Assets folder:
-
-You can do this by hand or just **run the batch file MoveLibraryFile.bat** in the sample_unity_bodytracking directory
-
-From Packages/Microsoft.Azure.Kinect.BodyTracking.1.1.2/content
-
-- dnn_model_2_0_op11.onnx
-
-From Packages/Microsoft.Azure.Kinect.BodyTracking.ONNXRuntime.1.10.0/lib/native/amd64/release
-
-- directml.dll
-- onnxruntime.dll
-- onnxruntime_providers_cuda.dll
-- onnxruntime_providers_shared.dll
-- onnxruntime_providers_tensorrt.dll
-
-
-#### 4) Next make sure you have all the [required DLLs for ONNX Runtime execution](https://docs.microsoft.com/en-us/azure/kinect-dk/body-sdk-setup#required-dlls-for-onnx-runtime-execution-environments):
-
-First, download and install [Visual C++ Redistributable](https://docs.microsoft.com/en-us/azure/kinect-dk/body-sdk-setup#visual-c-redistributable-for-visual-studio-2015).
-
-Additionally:
-
-**For CUDA**:
-* Download and install appropriate version of CUDA and make sure that CUDA_PATH exists as an environment variable (e.g C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4).
-* Download and install appropriate version of cuDNN and add a value to the PATH environment variable for it (e.g C:\Program Files\NVIDIA GPU Computing Toolkit\cuda-8.2.2.6\bin).
-
-**For TensorRT**:
-* Download and install appropriate version of CUDA and make sure that CUDA_PATH exists as an environment variable (e.g C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4).
-* Download and install appropriate version of TensorRT and add a value to the PATH environment variable for it (e.g C:\Program Files\NVIDIA GPU Computing Toolkit\TensorRT-8.2.1.8\lib).
-
-**For DirectML**:
-* Copy the **directml.dll** from the sample_unity_bodytracking folder to the unity editor directory (e.g C:\Program Files\Unity\Hub\Editor\2019.1.2f1\Editor)
-
-
-#### 5) Then specify Execution Provider for the tracking:
-
-In the ...\sample_unity_bodytracking\Assets\Scripts\SkeletalTrackingProvider.cs change the ProcessingMode to the one you want.
-
-* TrackerProcessingMode.GPU (Defaults to DirectML for Windows)
-* TrackerProcessingMode.CPU
-* TrackerProcessingMode.Cuda
-* TrackerProcessingMode.TensorRT
-* TrackerProcessingMode.DirectML
-
-
-#### 6) Open the Unity Project and under Scenes/  select the Kinect4AzureSampleScene:
-
-![alt text](./UnitySampleGettingStarted.png)
-
-
-Press play.
-
-
-#### If you wish to create a new scene:
-
-* Create a gameobject and add the component for the main.cs script.
-* Go to the prefab folder and drop in the Kinect4AzureTracker prefab.
-* Now drag the gameobject for the Kinect4AzureTracker onto the Tracker slot in the main object in the inspector.
-
-
-### Finally if you Build a Standalone Executable:
-
-You will need to put [required DLLs for ONNX Runtime execution](https://docs.microsoft.com/en-us/azure/kinect-dk/body-sdk-setup#required-dlls-for-onnx-runtime-execution-environments) in the same directory with the .exe:
-
-You can copy ONNXRuntime and DirectML files from nuget package by hand or from sample_unity_bodytracking directory after running **the batch file MoveLibraryFile.bat** (Step #3)
-
-For the CUDA/cuDNN/TensorRT DLLs (Step #4) you can either have them in the PATH environment variable or copy required set of DLLs from the installation locations:
-
-e.g. 
-* from C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4\bin for the CUDA files.
-* from C:\Program Files\NVIDIA GPU Computing Toolkit\cuda-8.2.2.6\bin for the cuDNN files.
-* from C:\Program Files\NVIDIA GPU Computing Toolkit\TensorRT-8.2.1.8\lib for the TensorRT files.
+本專案遵循原始 Azure Kinect Sample 的授權協議 (MIT License)。
